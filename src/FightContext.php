@@ -11,7 +11,7 @@ class FightContext
         $this->params = $params;
     }
 
-    public function evaluateIndexes()
+    public function startTurn()
     {
         $this->params['attackerIndex'] = $this->params['turns'] % 2;
         $this->params['difensorIndex'] = ($this->params['turns'] + 1) % 2;

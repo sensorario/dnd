@@ -35,7 +35,7 @@ class Fight
 
         while (!$this->finished) {
 
-            $this->context->evaluateIndexes();
+            $this->context->startTurn();
 
             /** @todo extract bab ca and d20 dice */
             $bab     = $this->context->getAttackerBab();
