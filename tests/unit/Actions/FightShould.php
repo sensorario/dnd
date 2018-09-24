@@ -1,6 +1,7 @@
 <?php
 
 use Sensorario\DnD\Actions\Fight;
+use Sensorario\DnD\FightContext;
 
 class FightShould extends PHPUnit\Framework\TestCase
 {
@@ -29,6 +30,14 @@ class FightShould extends PHPUnit\Framework\TestCase
             'ca'   => 30,
             'pf'   => 60,
         ];
+
+        $this->context = new FightContext([
+            'opponents' => [
+                $this->p1,
+                $this->p2,
+            ],
+            'turns' => 0,
+        ]);
     }
 
     /**
@@ -39,6 +48,7 @@ class FightShould extends PHPUnit\Framework\TestCase
     {
         $fight = new Fight(
             $this->dice,
+            $this->context,
             $this->logger
         );
 
@@ -53,6 +63,7 @@ class FightShould extends PHPUnit\Framework\TestCase
 
         $fight = new Fight(
             $this->dice,
+            $this->context,
             $this->logger
         );
 
@@ -69,6 +80,7 @@ class FightShould extends PHPUnit\Framework\TestCase
 
         $fight = new Fight(
             $this->dice,
+            $this->context,
             $this->logger
         );
 
@@ -98,6 +110,7 @@ class FightShould extends PHPUnit\Framework\TestCase
 
         $fight = new Fight(
             $this->dice,
+            $this->context,
             $this->logger
         );
 
@@ -114,6 +127,7 @@ class FightShould extends PHPUnit\Framework\TestCase
 
         $fight = new Fight(
             $this->dice,
+            $this->context,
             $this->logger
         );
 
@@ -130,6 +144,7 @@ class FightShould extends PHPUnit\Framework\TestCase
 
         $fight = new Fight(
             $this->dice,
+            $this->context,
             $this->logger
         );
 

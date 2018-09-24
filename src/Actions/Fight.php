@@ -4,53 +4,46 @@ namespace Sensorario\DnD\Actions;
 
 use Psr\Log\LoggerInterface;
 use Sensorario\DnD\Dice\Dice;
+use Sensorario\DnD\FightContext;
 
 class Fight
 {
     private $finished;
 
+    private $winner;
+
     private $dice;
+
+    private $context;
 
     private $logger;
 
-    private $winner;
-
     public function __construct(
         Dice $dice,
+        FightContext $context,
         LoggerInterface $logger = null
     ) {
         $this->dice = $dice;
+        $this->context = $context;
         $this->logger = $logger;
     }
 
-    public function run($p1, $p2)
+    public function run()
     {
-        $this->opponents = [];
-        $this->opponents[] = $p1;
-        $this->opponents[] = $p2;
-        $this->turns = 0;
-
-        $this->game = [
-            'opponents' => $this->opponents,
-            'turns' => $this->turns,
-        ];
-
         $this->blackShots = 0;
         $this->finished = false;
 
         while (!$this->finished) {
 
-            /** @todo detect attacker and defender */
-            $this->game['attackerIndex'] = $this->game['turns'] % 2;
-            $this->game['difensorIndex'] = ($this->game['turns'] + 1) % 2;
+            $this->context->evaluateIndexes();
 
             /** @todo extract bab ca and d20 dice */
-            $bab     = $this->game['opponents'][$this->game['attackerIndex']]['bab'];
+            $bab     = $this->context->getAttackerBab();
             $d20     = $this->dice->d20();
             $attacco = $d20 + $bab;
 
             /** @todo damage calculation */
-            $ca          = $this->game['opponents'][$this->game['difensorIndex']]['ca'];
+            $ca          = $this->context->getDifensorCa();
             $ciSonoDanni = $attacco >= $ca;
 
             if ($ciSonoDanni > 0) {
@@ -62,12 +55,12 @@ class Fight
                 $currentTurn['danni'] = $danni;
 
                 /** @todo applyDamage */
-                $this->game['opponents'][$this->game['difensorIndex']]['pf'] -= $danni;
+                $this->context->applyDamage($danni);
 
                 $this->logger->debug(
-                    $this->game['opponents'][$this->game['attackerIndex']]['name'] .
+                    $this->context->getAttackerName() .
                     " infligge un danno di " . $danni
-                    . " a " . $this->game['opponents'][$this->game['difensorIndex']]['name']
+                    . " a " . $this->context->getDifensorName()
                 );
 
             } else {
@@ -75,14 +68,14 @@ class Fight
                 $this->blackShots++;
 
                 $this->logger->debug(
-                    $this->opponents[$this->game['attackerIndex']]['name'] .
+                    $this->context->getAttackerName() .
                     " segna un colpo a vuoto "
                 );
 
             }
 
-            if ($this->game['opponents'][$this->game['difensorIndex']]['pf'] <= 0) {
-                $this->winner = $this->game['opponents'][$this->game['difensorIndex']]['name'];
+            if ($this->context->isDifensorDied()) {
+                $this->winner = $this->context->getDifensorName();
                 $this->finished = true;
             }
 
@@ -92,7 +85,7 @@ class Fight
                 );
             }
 
-            $this->game['turns']++;
+            $this->context->turnFinished();
         }
 
     }
@@ -109,7 +102,7 @@ class Fight
 
     public function getSfidanti()
     {
-        return $this->game['opponents'];
+        return $this->context->getSfidanti();
     }
 
     public function getWinner()
@@ -119,6 +112,6 @@ class Fight
 
     public function numberOfTurns()
     {
-        return $this->game['turns'];
+        return $this->context->getNumberOfTurns();
     }
 }
