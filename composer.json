@@ -1,0 +1,24 @@
+{
+    "name": "sensorario/dnd",
+    "description": "A d20 fight simulator",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Simone Gentili",
+            "email": "sensorario@gmail.com"
+        }
+    ],
+    "require": {
+        "sensorario/develog": "^1.4",
+        "phpunit/phpunit": "^7.3"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sensorario\\DnD\\": "src/"
+        }
+    }
+}
