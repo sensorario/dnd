@@ -116,7 +116,7 @@ class FightShould extends PHPUnit\Framework\TestCase
 
         $fight->run($this->p1, $this->p2);
 
-        $this->assertEquals('Mostro', $fight->getWinner());
+        $this->assertEquals('Monaco', $fight->getWinner());
     }
 
     public function testProvideNumberOfTurns()

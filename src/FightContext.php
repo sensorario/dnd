@@ -27,6 +27,11 @@ class FightContext
         return $this->params['opponents'][$this->params['difensorIndex']]['ca'];
     }
 
+    public function getDifensorPf()
+    {
+        return $this->params['opponents'][$this->params['difensorIndex']]['pf'];
+    }
+
     public function applyDamage($damage)
     {
         $this->params['opponents'][$this->params['difensorIndex']]['pf'] -= $damage;

@@ -54,14 +54,14 @@ class Fight
                 $danni = $this->dice->d10() + 4;
                 $currentTurn['danni'] = $danni;
 
-                /** @todo applyDamage */
-                $this->context->applyDamage($danni);
-
                 $this->logger->debug(
                     $this->context->getAttackerName() .
                     " infligge un danno di " . $danni
                     . " a " . $this->context->getDifensorName()
+                    . " che aveva " . $this->context->getDifensorPf()
                 );
+
+                $this->context->applyDamage($danni);
 
             } else {
 
@@ -75,7 +75,7 @@ class Fight
             }
 
             if ($this->context->isDifensorDied()) {
-                $this->winner = $this->context->getDifensorName();
+                $this->winner = $this->context->getAttackerName();
                 $this->finished = true;
             }
 
