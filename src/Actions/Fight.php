@@ -28,25 +28,29 @@ class Fight
         $this->opponents = [];
         $this->opponents[] = $p1;
         $this->opponents[] = $p2;
-
-        /** @todo fight manager */
         $this->turns = 0;
+
+        $this->game = [
+            'opponents' => $this->opponents,
+            'turns' => $this->turns,
+        ];
+
         $this->blackShots = 0;
         $this->finished = false;
 
         while (!$this->finished) {
 
             /** @todo detect attacker and defender */
-            $attackerIndex = $this->turns % 2;
-            $difensorIndex = ($this->turns + 1) % 2;
+            $this->game['attackerIndex'] = $this->game['turns'] % 2;
+            $this->game['difensorIndex'] = ($this->game['turns'] + 1) % 2;
 
             /** @todo extract bab ca and d20 dice */
-            $bab     = $this->opponents[$attackerIndex]['bab'];
+            $bab     = $this->game['opponents'][$this->game['attackerIndex']]['bab'];
             $d20     = $this->dice->d20();
             $attacco = $d20 + $bab;
 
             /** @todo damage calculation */
-            $ca          = $this->opponents[$difensorIndex]['ca'];
+            $ca          = $this->game['opponents'][$this->game['difensorIndex']]['ca'];
             $ciSonoDanni = $attacco >= $ca;
 
             if ($ciSonoDanni > 0) {
@@ -58,12 +62,12 @@ class Fight
                 $currentTurn['danni'] = $danni;
 
                 /** @todo applyDamage */
-                $this->opponents[$difensorIndex]['pf'] -= $danni;
+                $this->game['opponents'][$this->game['difensorIndex']]['pf'] -= $danni;
 
                 $this->logger->debug(
-                    $this->opponents[$attackerIndex]['name'] .
+                    $this->game['opponents'][$this->game['attackerIndex']]['name'] .
                     " infligge un danno di " . $danni
-                    . " a " . $this->opponents[$difensorIndex]['name']
+                    . " a " . $this->game['opponents'][$this->game['difensorIndex']]['name']
                 );
 
             } else {
@@ -71,14 +75,14 @@ class Fight
                 $this->blackShots++;
 
                 $this->logger->debug(
-                    $this->opponents[$attackerIndex]['name'] .
+                    $this->opponents[$this->game['attackerIndex']]['name'] .
                     " segna un colpo a vuoto "
                 );
 
             }
 
-            if ($this->opponents[$difensorIndex]['pf'] <= 0) {
-                $this->winner = $this->opponents[$difensorIndex]['name'];
+            if ($this->game['opponents'][$this->game['difensorIndex']]['pf'] <= 0) {
+                $this->winner = $this->game['opponents'][$this->game['difensorIndex']]['name'];
                 $this->finished = true;
             }
 
@@ -88,7 +92,7 @@ class Fight
                 );
             }
 
-            $this->turns++;
+            $this->game['turns']++;
         }
 
     }
@@ -105,7 +109,7 @@ class Fight
 
     public function getSfidanti()
     {
-        return $this->opponents;
+        return $this->game['opponents'];
     }
 
     public function getWinner()
@@ -115,6 +119,6 @@ class Fight
 
     public function numberOfTurns()
     {
-        return $this->turns;
+        return $this->game['turns'];
     }
 }
