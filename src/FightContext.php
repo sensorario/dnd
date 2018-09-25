@@ -2,13 +2,24 @@
 
 namespace Sensorario\DnD;
 
+use Psr\Log\LoggerInterface;
+
 class FightContext
 {
     private $params;
 
+    private $logger;
+
+    private $editor;
+
     public function __construct(array $params)
     {
         $this->params = $params;
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     public function startTurn()
@@ -34,6 +45,13 @@ class FightContext
 
     public function applyDamage($damage)
     {
+        $this->logger->debug(
+            $this->getAttackerName() .
+            " infligge un danno di " . $damage
+            . " a " . $this->getDifensorName()
+            . " che aveva " . $this->getDifensorPf()
+        );
+
         $this->params['opponents'][$this->params['difensorIndex']]['pf'] -= $damage;
     }
 

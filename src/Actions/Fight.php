@@ -26,6 +26,8 @@ class Fight
         $this->dice = $dice;
         $this->context = $context;
         $this->logger = $logger;
+
+        $this->context->setLogger($this->logger);
     }
 
     public function run()
@@ -53,13 +55,6 @@ class Fight
                 /** @todo $this->damager->calculate() */
                 $danni = $this->dice->d10() + 4;
                 $currentTurn['danni'] = $danni;
-
-                $this->logger->debug(
-                    $this->context->getAttackerName() .
-                    " infligge un danno di " . $danni
-                    . " a " . $this->context->getDifensorName()
-                    . " che aveva " . $this->context->getDifensorPf()
-                );
 
                 $this->context->applyDamage($danni);
 
