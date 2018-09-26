@@ -5,11 +5,10 @@ namespace Sensorario\DnD\Actions;
 use Psr\Log\LoggerInterface;
 use Sensorario\DnD\Dice\Dice;
 use Sensorario\DnD\FightContext;
+use Sensorario\DnD\Semafore;
 
 class Fight
 {
-    private $finished;
-
     private $winner;
 
     private $dice;
@@ -18,14 +17,18 @@ class Fight
 
     private $logger;
 
+    private $semafore;
+
     public function __construct(
         Dice $dice,
         FightContext $context,
+        Semafore $semafore,
         LoggerInterface $logger = null
     ) {
         $this->dice = $dice;
         $this->context = $context;
         $this->logger = $logger;
+        $this->semafore = $semafore;
 
         $this->context->setLogger($this->logger);
     }
@@ -33,9 +36,10 @@ class Fight
     public function run()
     {
         $this->blankShots = 0;
-        $this->finished = false;
 
-        while (!$this->finished) {
+        $this->semafore->turnOn();
+
+        while ($this->semafore->isGreen()) {
 
             $this->context->startTurn();
 
@@ -70,7 +74,7 @@ class Fight
 
             if ($this->context->isDifensorDied()) {
                 $this->winner = $this->context->getAttackerName();
-                $this->finished = true;
+                $this->semafore->stop();
             }
 
             $this->ensureNotTooManyBlankShot();
@@ -82,7 +86,7 @@ class Fight
 
     public function isFinished()
     {
-        return $this->finished;
+        return $this->semafore->isGreen() == false;
     }
 
     public function numberOfBlackShot()

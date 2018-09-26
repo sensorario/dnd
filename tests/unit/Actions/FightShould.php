@@ -2,6 +2,7 @@
 
 use Sensorario\DnD\Actions\Fight;
 use Sensorario\DnD\FightContext;
+use Sensorario\DnD\Semafore;
 
 class FightShould extends PHPUnit\Framework\TestCase
 {
@@ -16,6 +17,8 @@ class FightShould extends PHPUnit\Framework\TestCase
             ->getMockBuilder('Psr\Log\LoggerInterface')
             ->disableOriginalConstructor()
             ->getMock();
+
+        $this->semafore = new Semafore();
 
         $this->p1 = [
             'name' => 'Monaco',
@@ -49,6 +52,7 @@ class FightShould extends PHPUnit\Framework\TestCase
         $fight = new Fight(
             $this->dice,
             $this->context,
+            $this->semafore,
             $this->logger
         );
 
@@ -64,6 +68,7 @@ class FightShould extends PHPUnit\Framework\TestCase
         $fight = new Fight(
             $this->dice,
             $this->context,
+            $this->semafore,
             $this->logger
         );
 
@@ -81,6 +86,7 @@ class FightShould extends PHPUnit\Framework\TestCase
         $fight = new Fight(
             $this->dice,
             $this->context,
+            $this->semafore,
             $this->logger
         );
 
@@ -111,6 +117,7 @@ class FightShould extends PHPUnit\Framework\TestCase
         $fight = new Fight(
             $this->dice,
             $this->context,
+            $this->semafore,
             $this->logger
         );
 
@@ -128,6 +135,7 @@ class FightShould extends PHPUnit\Framework\TestCase
         $fight = new Fight(
             $this->dice,
             $this->context,
+            $this->semafore,
             $this->logger
         );
 
@@ -145,6 +153,7 @@ class FightShould extends PHPUnit\Framework\TestCase
         $fight = new Fight(
             $this->dice,
             $this->context,
+            $this->semafore,
             $this->logger
         );
 
