@@ -32,7 +32,7 @@ class Fight
 
     public function run()
     {
-        $this->blackShots = 0;
+        $this->blankShots = 0;
         $this->finished = false;
 
         while (!$this->finished) {
@@ -50,17 +50,16 @@ class Fight
 
             if ($ciSonoDanni > 0) {
 
-                $this->blackShots = 0;
+                $this->blankShots = 0;
 
                 /** @todo $this->damager->calculate() */
                 $danni = $this->dice->d10() + 4;
-                $currentTurn['danni'] = $danni;
 
                 $this->context->applyDamage($danni);
 
             } else {
 
-                $this->blackShots++;
+                $this->blankShots++;
 
                 $this->logger->debug(
                     $this->context->getAttackerName() .
@@ -74,11 +73,7 @@ class Fight
                 $this->finished = true;
             }
 
-            if ($this->blackShots > 10) {
-                throw new \RuntimeException(
-                    'Oops! Too Many blank shot'
-                );
-            }
+            $this->ensureNotTooManyBlankShot();
 
             $this->context->turnFinished();
         }
@@ -92,7 +87,7 @@ class Fight
 
     public function numberOfBlackShot()
     {
-        return $this->blackShots;
+        return $this->blankShots;
     }
 
     public function getSfidanti()
@@ -108,5 +103,14 @@ class Fight
     public function numberOfTurns()
     {
         return $this->context->getNumberOfTurns();
+    }
+
+    private function ensureNotTooManyBlankShot()
+    {
+        if ($this->blankShots > 10) {
+            throw new \RuntimeException(
+                'Oops! Too Many blank shot'
+            );
+        }
     }
 }
