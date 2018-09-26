@@ -25,6 +25,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             'bab'  => 15,
             'ca'   => 30,
             'pf'   => 60,
+            'size' => 'Medium',
         ];
 
         $this->p2 = [
@@ -32,6 +33,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             'bab'  => 15,
             'ca'   => 30,
             'pf'   => 60,
+            'size' => 'Medium',
         ];
 
         $this->context = new FightContext([
@@ -98,11 +100,13 @@ class FightShould extends PHPUnit\Framework\TestCase
                 'bab'  => 15,
                 'ca'   => 30,
                 'pf'   => 4,
+                'size' => 'Medium',
             ], [
                 'name' => 'Mostro',
                 'bab'  => 15,
                 'ca'   => 30,
                 'pf'   => 0,
+                'size' => 'Medium',
             ]]),
             json_encode($fight->getSfidanti())
         );

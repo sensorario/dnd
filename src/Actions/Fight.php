@@ -45,8 +45,9 @@ class Fight
 
             /** @todo extract bab ca and d20 dice */
             $bab     = $this->context->getAttackerBab();
+            $size    = $this->context->getAttackerSize();
             $d20     = $this->dice->d20();
-            $attacco = $d20 + $bab;
+            $attacco = $d20 + $bab + $size;
 
             /** @todo damage calculation */
             $ca          = $this->context->getDifensorCa();
