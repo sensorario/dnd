@@ -1,4 +1,3 @@
 # DnD
 
-This is a TDD kata to learn how to play with DnD.
-
+[![Build Status](https://travis-ci.com/sensorario/dnd.svg?branch=master)](https://travis-ci.com/sensorario/dnd)
