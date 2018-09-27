@@ -6,6 +6,7 @@ use Sensorario\Develog\Logger\NormaLogger;
 use Sensorario\DnD\Actions\Fight;
 use Sensorario\DnD\Dice\Dice;
 use Sensorario\DnD\FightContext;
+use Sensorario\DnD\Semafore;
 
 $logger = new NormaLogger();
 $logger->setSizeLimitInBytes(2000000);
@@ -20,16 +21,19 @@ $fight = new Fight(
                 'pf'   => 42,
                 'ca'   => 10,
                 'bab'  => 3,
+                'size' => 'Medium',
             ],
             [
                 'name' => 'Norbert',
                 'pf'   => 42,
                 'ca'   => 10,
                 'bab'  => 3,
+                'size' => 'Medium',
             ],
         ],
         'turns' => 0,
     ]),
+    new Semafore(),
     $logger
 );
 

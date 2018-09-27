@@ -60,6 +60,13 @@ class FightContext
         return $this->params['opponents'][$this->params['attackerIndex']]['name'];
     }
 
+    public function getAttackerSize()
+    {
+        $size = $this->params['opponents'][$this->params['attackerIndex']]['size'];
+
+        return Dictionary::sizeModifier($size);
+    }
+
     public function getDifensorName()
     {
         return $this->params['opponents'][$this->params['difensorIndex']]['name'];
