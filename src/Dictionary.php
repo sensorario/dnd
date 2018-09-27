@@ -18,6 +18,12 @@ class Dictionary
 
     public static function sizeModifier($size)
     {
+        if (!isset(self::$sizes[$size])) {
+            throw new \RuntimeException(
+                'Oops! Undefined size!!'
+            );
+        }
+
         return self::$sizes[$size];
     }
 }
