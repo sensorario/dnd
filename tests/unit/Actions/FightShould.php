@@ -58,7 +58,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->logger
         );
 
-        $fight->run($this->p1, $this->p2);
+        $fight->run();
     }
 
     public function testWithD20FightEndsForSure()
@@ -74,7 +74,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->logger
         );
 
-        $fight->run($this->p1, $this->p2);
+        $fight->run();
 
         $this->assertSame(true, $fight->isFinished());
     }
@@ -92,7 +92,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->logger
         );
 
-        $fight->run($this->p1, $this->p2);
+        $fight->run();
 
         $this->assertEquals(
             json_encode([[
@@ -125,7 +125,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->logger
         );
 
-        $fight->run($this->p1, $this->p2);
+        $fight->run();
 
         $this->assertEquals('Monaco', $fight->getWinner());
     }
@@ -143,7 +143,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->logger
         );
 
-        $fight->run($this->p1, $this->p2);
+        $fight->run();
 
         $this->assertEquals(29, $fight->numberOfTurns());
     }
@@ -161,7 +161,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->logger
         );
 
-        $fight->run($this->p1, $this->p2);
+        $fight->run();
 
         $this->assertEquals(0, $fight->numberOfBlackShot());
     }
