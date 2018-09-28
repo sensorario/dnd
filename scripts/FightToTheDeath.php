@@ -6,6 +6,7 @@ use Sensorario\Develog\Logger\NormaLogger;
 use Sensorario\DnD\Actions\Fight;
 use Sensorario\DnD\Dice\Dice;
 use Sensorario\DnD\FightContext;
+use Sensorario\DnD\ModCar;
 use Sensorario\DnD\Semafore;
 
 $logger = new NormaLogger();
@@ -34,9 +35,12 @@ $fight = new Fight(
         'turns' => 0,
     ]),
     new Semafore(),
+    new ModCar(),
     $logger
 );
 
 $fight->run();
 
-echo $fight->getWinner();
+echo json_encode([
+    'winner' => $fight->getWinner(),
+]);
