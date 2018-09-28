@@ -5,6 +5,7 @@ namespace Sensorario\DnD\Actions;
 use Psr\Log\LoggerInterface;
 use Sensorario\DnD\Dice\Dice;
 use Sensorario\DnD\FightContext;
+use Sensorario\DnD\ModCar;
 use Sensorario\DnD\Semafore;
 
 class Fight
@@ -19,16 +20,20 @@ class Fight
 
     private $semafore;
 
+    private $modcar;
+
     public function __construct(
         Dice $dice,
         FightContext $context,
         Semafore $semafore,
+        ModCar $modcar,
         LoggerInterface $logger = null
     ) {
         $this->dice = $dice;
         $this->context = $context;
         $this->logger = $logger;
         $this->semafore = $semafore;
+        $this->modcar = $modcar;
 
         $this->context->setLogger($this->logger);
     }
@@ -47,7 +52,8 @@ class Fight
             $bab     = $this->context->getAttackerBab();
             $size    = $this->context->getAttackerSize();
             $d20     = $this->dice->d20();
-            $attacco = $d20 + $bab + $size;
+            $modcar  = $this->modcar->elaborate();
+            $attacco = $d20 + $bab + $size + $modcar;
 
             /** @todo damage calculation */
             $ca          = $this->context->getDifensorCa();

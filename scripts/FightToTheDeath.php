@@ -3,9 +3,12 @@
 include_once __DIR__ . '/../vendor/autoload.php';
 
 use Sensorario\Develog\Logger\NormaLogger;
+use Sensorario\DnD\Ability;
 use Sensorario\DnD\Actions\Fight;
 use Sensorario\DnD\Dice\Dice;
 use Sensorario\DnD\FightContext;
+use Sensorario\DnD\ModCar;
+use Sensorario\DnD\Proficiency;
 use Sensorario\DnD\Semafore;
 
 $logger = new NormaLogger();
@@ -34,9 +37,15 @@ $fight = new Fight(
         'turns' => 0,
     ]),
     new Semafore(),
+    new ModCar(
+        new Ability(),
+        new Proficiency()
+    ),
     $logger
 );
 
 $fight->run();
 
-echo $fight->getWinner();
+echo json_encode([
+    'winner' => $fight->getWinner(),
+]);

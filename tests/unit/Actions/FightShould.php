@@ -8,6 +8,14 @@ class FightShould extends PHPUnit\Framework\TestCase
 {
     public function setUp()
     {
+        $this->modcar = $this
+            ->getMockBuilder('Sensorario\DnD\ModCar')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->modcar->expects($this->any())
+            ->method('elaborate')
+            ->willReturn(0);
+
         $this->dice = $this
             ->getMockBuilder('Sensorario\DnD\Dice\Dice')
             ->disableOriginalConstructor()
@@ -55,6 +63,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->dice,
             $this->context,
             $this->semafore,
+            $this->modcar,
             $this->logger
         );
 
@@ -71,6 +80,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->dice,
             $this->context,
             $this->semafore,
+            $this->modcar,
             $this->logger
         );
 
@@ -89,6 +99,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->dice,
             $this->context,
             $this->semafore,
+            $this->modcar,
             $this->logger
         );
 
@@ -122,6 +133,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->dice,
             $this->context,
             $this->semafore,
+            $this->modcar,
             $this->logger
         );
 
@@ -140,6 +152,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->dice,
             $this->context,
             $this->semafore,
+            $this->modcar,
             $this->logger
         );
 
@@ -158,6 +171,7 @@ class FightShould extends PHPUnit\Framework\TestCase
             $this->dice,
             $this->context,
             $this->semafore,
+            $this->modcar,
             $this->logger
         );
 
